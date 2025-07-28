@@ -1,4 +1,8 @@
-import { MODE, PORT } from '@/env'
+import fastifyCookie from '@fastify/cookie'
+import fastifyCors from '@fastify/cors'
+import fastifyJwt from '@fastify/jwt'
+import { JWT_SECRET, MODE, PORT } from '@root/env'
+import jwtAuthenticate from '@root/http/plugins/jwt-authenticate'
 import fastify from 'fastify'
 
 /** * Starts the Fastify server.
@@ -25,9 +29,25 @@ async function startServer() {
  * @returns {Promise<FastifyInstance>} A promise that resolves to the Fastify server instance.
  */
 async function buildServer() {
+    // Create a Fastify server instance
     const server = fastify({ logger: MODE === 'development' })
 
+    // CORS configuration
+    server.register(fastifyCors, {
+        origin: 'http://127.0.0.1:5173',
+        credentials: true,
+    })
+    // Cookie parser
+    server.register(fastifyCookie)
+    // JWT authentication
+    server.register(fastifyJwt, {
+        secret: JWT_SECRET,
+    })
+
     // Register plugins
+    // Database connection plugin
+    // JWT verification plugin
+    server.decorate('authenticate', jwtAuthenticate(server))
 
     // Health check route
     server.get('/', () => {
