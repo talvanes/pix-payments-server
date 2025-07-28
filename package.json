@@ -1,7 +1,7 @@
 {
-  "name": "babel-minimal",
+  "name": "pix-payments-server",
   "version": "1.0.0",
-  "description": "A modern Node.js project template using Babel for ES6+ support, with built-in code quality tools.",
+  "description": "PIX payment system with user authentication and real-time dashboard monitoring. The server part.",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon",
@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "Talvanes Ferreira",
-  "license": "MIT",
+  "license": "WTFPL",
   "devDependencies": {
     "@babel/cli": "^7.28.0",
     "@babel/core": "^7.28.0",
