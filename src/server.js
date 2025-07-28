@@ -1,7 +1,7 @@
 import fastifyCookie from '@fastify/cookie'
 import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
-import { JWT_SECRET, MODE, PORT } from '@root/env'
+import { env } from '@root/env'
 import jwtAuthenticate from '@root/http/plugins/jwt-authenticate'
 import fastify from 'fastify'
 
@@ -12,7 +12,7 @@ import fastify from 'fastify'
  */
 async function startServer() {
     const server = await buildServer()
-    const port = PORT
+    const port = env['PORT']
 
     try {
         await server.listen({ port })
@@ -30,7 +30,7 @@ async function startServer() {
  */
 async function buildServer() {
     // Create a Fastify server instance
-    const server = fastify({ logger: MODE === 'development' })
+    const server = fastify({ logger: env['NODE_ENV'] === 'development' })
 
     // CORS configuration
     server.register(fastifyCors, {
@@ -41,7 +41,7 @@ async function buildServer() {
     server.register(fastifyCookie)
     // JWT authentication
     server.register(fastifyJwt, {
-        secret: JWT_SECRET,
+        secret: env['JWT_SECRET'],
     })
 
     // Register plugins
