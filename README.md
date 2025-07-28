@@ -7,7 +7,7 @@ A minimalistic Node.js project template using Babel for ES6+ support, focusing o
 
 - Babel with `@babel/preset-env` for modern JavaScript syntax
 - Example [`Car`](src/car.js) class using ES6 modules
-- Entry point: [`index.js`](src/index.js) demonstrates usage of the Car class
+- Entry point: [`server.js`](src/server.js) demonstrates usage of the Car class
 - Development mode with hot-reloading via Nodemon and Babel Node
 - Production-ready build process with transpiled output to `dist/`
 - Enhanced module resolution:
@@ -30,7 +30,7 @@ A minimalistic Node.js project template using Babel for ES6+ support, focusing o
    ```sh
    npm run dev
    ```
-   This uses Nodemon and Babel Node to run [`src/index.js`](src/index.js) with automatic reload on changes.
+   This uses Nodemon and Babel Node to run [`src/server.js`](src/server.js) with automatic reload on changes.
 
 3. **Build for production:**
    ```sh
@@ -103,7 +103,7 @@ This configuration helps maintain cleaner import statements and reduces the need
 ```
 .
 ├── src/              # Source directory
-│   ├── index.js      # Entry point, imports and uses Car class
+│   ├── server.js      # Entry point, imports and uses Car class
 │   └── car.js        # Car class (ES6 module)
 ├── dist/             # Production build output (generated)
 ├── eslint.config.mjs # ESLint flat configuration (modern format)

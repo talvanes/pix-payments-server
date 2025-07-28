@@ -2,11 +2,11 @@
   "name": "babel-minimal",
   "version": "1.0.0",
   "description": "A modern Node.js project template using Babel for ES6+ support, with built-in code quality tools.",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "scripts": {
     "dev": "nodemon",
     "build": "babel src -d dist",
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -26,5 +26,9 @@
     "globals": "^16.3.0",
     "nodemon": "^3.1.10",
     "prettier": "3.6.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "fastify": "^5.4.0"
   }
 }

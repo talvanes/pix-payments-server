@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ignore": ["dist"],
   "ext": "js",
-  "exec": "babel-node src/index.js"
+  "exec": "babel-node src/server.js"
 }
