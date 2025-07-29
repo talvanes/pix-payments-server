@@ -9,4 +9,5 @@ export const env = cleanEnv(process.env, {
     NODE_ENV: str({ choices: ['development', 'production', 'test'] }),
     PORT: port(),
     JWT_SECRET: str(),
+    SQLITE_DB_PATH: str({ default: './data/pix-payments.db' }),
 })

@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  pix-payments-sqlite:
+    image: sqlite:latest
+    environment:
+      SQLITE_DB_PATH: /data/pix_payments.db
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/data
+    command: [ "sqlite3", "/data/pix-payments.db" ]
