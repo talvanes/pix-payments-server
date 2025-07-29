@@ -1,12 +1,25 @@
 services:
-  pix-payments-sqlite:
-    image: alpine/sqlite:latest
-    container_name: pix-payments-sqlite
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pix-payments-server
     environment:
-      SQLITE_DB_PATH: /data/pix_payments.db
+      - NODE_ENV=production
+      - PORT=3000
+      - SQLITE_DB_PATH=/app/data/pix_payments.db
     ports:
-      - "8080:8080"
+      - "3000:3000"
     volumes:
-      - ./data:/data
-    command: ["sqlite3", "/data/pix_payments.db"]
-    restart: always
+      - ./data:/app/data
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: keinos/sqlite3:latest
+    container_name: pix-payments-db
+    volumes:
+      - ./data:/app/data
+    command: sh -c "mkdir -p /app/data && sqlite3 /app/data/pix_payments.db"
+    restart: unless-stopped
