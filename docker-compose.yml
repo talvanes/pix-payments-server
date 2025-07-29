@@ -1,11 +1,12 @@
 services:
   pix-payments-sqlite:
     image: alpine/sqlite:latest
+    container_name: pix-payments-sqlite
     environment:
       SQLITE_DB_PATH: /data/pix_payments.db
     ports:
       - "8080:8080"
     volumes:
       - ./data:/data
-    command: [ "sqlite3", "/data/pix_payments.db" ]
+    command: ["sqlite3", "/data/pix_payments.db"]
     restart: always
