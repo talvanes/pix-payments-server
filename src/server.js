@@ -5,6 +5,7 @@ import { env } from '@root/env'
 import jwtAuthenticate from '@root/http/plugins/jwt-authenticate'
 import fastify from 'fastify'
 
+// Function to start the server
 async function startServer() {
     const server = await buildServer()
     const port = env['PORT']
@@ -18,10 +19,10 @@ async function startServer() {
     }
 }
 
-// Function to build the Fastify server
+// Function to build the server
 async function buildServer() {
     // Create a Fastify server instance
-    const server = fastify({ logger: env['NODE_ENV'] === 'development' })
+    const server = fastify({ logger: env.isDevelopment })
 
     // CORS configuration
     server.register(fastifyCors, {
