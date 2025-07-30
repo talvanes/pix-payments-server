@@ -1,25 +1,13 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: pix-payments-server
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - SQLITE_DB_PATH=/app/data/pix_payments.db
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./data:/app/data
-    depends_on:
-      - db
-    restart: unless-stopped
-
-  db:
+  sqlite:
     image: keinos/sqlite3:latest
-    container_name: pix-payments-db
+    container_name: pix-payments-sqlite
     volumes:
-      - ./data:/app/data
-    command: sh -c "mkdir -p /app/data && sqlite3 /app/data/pix_payments.db"
-    restart: unless-stopped
+      - ./data:/data
+    command: tail -f /dev/null
+    networks:
+      - pix-payments-network
+
+networks:
+  pix-payments-network:
+    driver: bridge
