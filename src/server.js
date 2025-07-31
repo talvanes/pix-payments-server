@@ -2,7 +2,6 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import { env } from '@root/env'
-import jwtAuthenticate from '@root/http/plugins/jwt-authenticate'
 import fastify from 'fastify'
 
 // Function to start the server
@@ -36,10 +35,8 @@ async function buildServer() {
         secret: env['JWT_SECRET'],
     })
 
-    // Register plugins
     // Database connection plugin
     // JWT verification plugin
-    server.decorate('authenticate', jwtAuthenticate(server))
 
     // Health check route
     server.get('/', () => {
