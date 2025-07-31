@@ -20,6 +20,23 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
     networks:
       - pix-payments-network
+  dbgate:
+    image: dbgate/dbgate
+    restart: always
+    container_name: pix-payments-dbgate
+    ports:
+      - "3000:3000"
+    volumes:
+      - dbgate_data:/root/.dbgate
+    networks:
+      - pix-payments-network
+    depends_on:
+      - sqlite
+      - pgsql
+
+volumes:
+  dbgate_data:
+    driver: local
 
 networks:
   pix-payments-network:
