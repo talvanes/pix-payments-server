@@ -20,16 +20,6 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
     networks:
       - pix-payments-network
-  adminer:
-    image: adminer:latest
-    container_name: pix-payments-adminer
-    ports:
-      - "8080:8080"
-    networks:
-      - pix-payments-network
-    depends_on:
-      - sqlite
-      - pgsql
 
 networks:
   pix-payments-network:
