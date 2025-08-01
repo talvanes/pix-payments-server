@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - pix-payments-network
   dbgate:
@@ -28,6 +28,8 @@ services:
 
 volumes:
   dbgate_data:
+    driver: local
+  postgres_data:
     driver: local
 
 networks:
