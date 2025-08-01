@@ -32,27 +32,25 @@ export async function createTables(pool) {
     `.trim()
 
     const createIndexes = [
-        'CREATE INDEX IF NOT EXISTS idx_pix_charges_token ON pix_charges(token)',
-        'CREATE INDEX IF NOT EXISTS idx_pix_charges_user_id ON pix_charges(user_id)',
-        'CREATE INDEX IF NOT EXISTS idx_pix_charges_status ON pix_charges(status)',
-        'CREATE INDEX IF NOT EXISTS idx_pix_charges_expires_at ON pix_charges(expires_at)',
+        /* sql */ `CREATE INDEX IF NOT EXISTS idx_pix_charges_token ON pix_charges(token)`,
+        /* sql */ `CREATE INDEX IF NOT EXISTS idx_pix_charges_user_id ON pix_charges(user_id)`,
+        /* sql */ `CREATE INDEX IF NOT EXISTS idx_pix_charges_status ON pix_charges(status)`,
+        /* sql */ `CREATE INDEX IF NOT EXISTS idx_pix_charges_expires_at ON pix_charges(expires_at)`,
     ]
 
     const client = await pool.connect()
-
     try {
+        const runIndexSqls = createIndexes.map((indexSql) =>
+            client
+                .query(indexSql)
+                .catch((err) => console.error('Index creation error:', err))
+        )
+
         await Promise.allSettled([
             client.query(createUsersTable),
             client.query(createPixChargesTable),
+            ...runIndexSqls,
         ])
-
-        for (const indexSql of createIndexes) {
-            try {
-                await client.query(indexSql)
-            } catch (err) {
-                console.error('Index creation error:', err)
-            }
-        }
     } finally {
         client.release()
     }

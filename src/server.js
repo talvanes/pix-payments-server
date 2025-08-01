@@ -1,6 +1,7 @@
 import fastifyCookie from '@fastify/cookie'
 import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
+import Database from '@root/db/database'
 import { env } from '@root/env'
 import fastify from 'fastify'
 
@@ -36,6 +37,14 @@ async function buildServer() {
     })
 
     // Database connection plugin
+    const db = new Database(
+        env['DB_HOST'],
+        env['DB_NAME'],
+        env['DB_USER'],
+        env['DB_PASSWORD'],
+        env['DB_PORT']
+    )
+    server.decorate('db', db)
     // JWT verification plugin
 
     // Health check route

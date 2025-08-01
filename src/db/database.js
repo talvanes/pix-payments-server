@@ -2,7 +2,7 @@ import { Pool } from 'pg'
 import { createTables } from './utils'
 
 class Database {
-    constructor(host, port, database, user, password) {
+    constructor(host, database, user, password, port = 5432) {
         this.pool = new Pool({
             host,
             port,
@@ -33,7 +33,6 @@ class Database {
     // Generic query methods
     async run(sql, params = []) {
         const client = await this.pool.connect()
-
         try {
             const result = await client.query(sql, params)
             return {
@@ -47,7 +46,6 @@ class Database {
 
     async get(sql, params = []) {
         const client = await this.pool.connect()
-
         try {
             const result = await client.query(sql, params)
             return result.rows[0]
@@ -58,7 +56,6 @@ class Database {
 
     async all(sql, params = []) {
         const client = await this.pool.connect()
-
         try {
             const result = await client.query(sql, params)
             return result.rows
