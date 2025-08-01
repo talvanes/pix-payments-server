@@ -1,12 +1,4 @@
 services:
-  sqlite:
-    image: keinos/sqlite3:latest
-    container_name: pix-payments-sqlite
-    volumes:
-      - ./data/sqlite:/data
-    command: tail -f /dev/null
-    networks:
-      - pix-payments-network
   pgsql:
     image: postgres:latest
     container_name: pix-payments-postgres
@@ -31,7 +23,6 @@ services:
     networks:
       - pix-payments-network
     depends_on:
-      - sqlite
       - pgsql
 
 volumes:

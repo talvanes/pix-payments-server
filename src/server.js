@@ -3,7 +3,6 @@ import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import { env } from '@root/env'
 import fastify from 'fastify'
-import SQLiteDatabase from './db/sqlite-database'
 
 // Function to start the server
 async function startServer() {
@@ -37,7 +36,6 @@ async function buildServer() {
     })
 
     // Database connection plugin
-    server.decorate('db', new SQLiteDatabase(env['SQLITE_DB_PATH']))
     // JWT verification plugin
 
     // Health check route

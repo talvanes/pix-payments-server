@@ -1,6 +1,6 @@
 /**
  * Utility function for creating necessary database tables.
- * @param {import('sqlite3').Database} db - The SQLite database instance.
+ * @param {import('pg').Pool} db - The PostgreSQL database instance.
  * @throws Will throw an error if table creation fails.
  * @returns {Promise<void>}
  */
@@ -38,23 +38,5 @@ export async function createTables(db) {
         'CREATE INDEX IF NOT EXISTS idx_pix_charges_expires_at ON pix_charges(expires_at)',
     ]
 
-    return new Promise((resolve, reject) => {
-        db.serialize(() => {
-            db.run(createUsersTable, (err) => {
-                if (err) reject(err)
-            })
-
-            db.run(createPixChargesTable, (err) => {
-                if (err) reject(err)
-            })
-
-            createIndexes.forEach((indexSql) => {
-                db.run(indexSql, (err) => {
-                    if (err) console.log('Index creation error:', err)
-                })
-            })
-
-            resolve()
-        })
-    })
+    return new Promise((resolve, reject) => {})
 }
