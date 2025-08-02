@@ -18,6 +18,8 @@ This is the server-side component of the PIX Payments system, providing a robust
 │   └── http/              # HTTP-related modules
 │       ├── plugins/       # Server plugins
 │       └── routes/        # API routes
+├── tests/                 # Test files
+│   └── setup.js           # Test setup and configuration
 ├── docker-compose.yml     # Docker services configuration
 ├── .env.example           # Environment variables template
 ├── eslint.config.mjs      # ESLint configuration
@@ -75,7 +77,8 @@ The application is containerized using Docker and includes:
 2. The services will be available at:
    - Database GUI (DBGate): http://localhost:3000
    - PostgreSQL: localhost:5432
-   - Node.js server (available under the command `npm run dev`): http://localhost:3100
+   - Node.js server
+     Available under the command `npm run dev`: http://localhost:3100
 
 ### Database Configuration
 
