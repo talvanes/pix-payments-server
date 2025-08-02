@@ -4,5 +4,8 @@
     "source.organizeImports": "explicit",
     "source.addMissingImports": "explicit",
     "source.removeUnusedImports": "explicit"
+  },
+  "material-icon-theme.folders.associations": {
+    "db/migrations": "tools",
   }
 }
