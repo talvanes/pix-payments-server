@@ -1,5 +1,5 @@
+import { Migrator } from '@/db/migrator'
 import { Pool } from 'pg'
-import { createTables } from './utils'
 
 class Database {
     constructor(host, database, user, password, port = 5432) {
@@ -13,6 +13,8 @@ class Database {
             idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
             connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection
         })
+
+        this.migrator = new Migrator(this.pool)
     }
 
     async initialize() {
@@ -22,7 +24,9 @@ class Database {
             console.log('Connected to the database successfully')
             client.release()
 
-            await createTables(this.pool)
+            // Run migrations instead of creating tables directly
+            await this.migrator.runMigrations()
+
             return Promise.resolve()
         } catch (err) {
             console.error('Error connecting to database:', err)

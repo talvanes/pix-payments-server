@@ -6,17 +6,17 @@ export class Migrator {
     }
 
     async initialize() {
-        const client = await this.pool.connect()
-        try {
-            // Create migrations tracking table
-            await client.query(
-                `
+        const createMigrationTrackingTable = `
         CREATE TABLE IF NOT EXISTS schema_migrations (
           id VARCHAR(255) PRIMARY KEY,
           description TEXT,
           executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`.trim()
-            )
+
+        const client = await this.pool.connect()
+        try {
+            // Create migrations tracking table
+            await client.query(createMigrationTrackingTable)
         } finally {
             client.release()
         }
