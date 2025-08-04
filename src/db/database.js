@@ -1,5 +1,5 @@
-import { Migrator } from '@/db/migrator'
 import { Pool } from 'pg'
+import { Migrator } from './migrator'
 
 class Database {
     constructor(host, database, user, password, port = 5432) {

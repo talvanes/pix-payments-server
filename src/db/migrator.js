@@ -1,4 +1,4 @@
-import { migrations } from '@/db/migrations/index.js'
+import { migrations } from './migrations/index.js'
 
 export class Migrator {
     constructor(pool) {
