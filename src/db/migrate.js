@@ -4,6 +4,7 @@ import { env } from '@/env.js'
 import chalk from 'chalk'
 import inquirer from 'inquirer'
 import { Pool } from 'pg'
+import { match } from 'ts-pattern'
 import { Migrator } from './migrator.js'
 
 const pool = new Pool({
@@ -63,7 +64,7 @@ async function migrateInit() {
     console.log(chalk.green('Initialized migration schema successfully!'))
 }
 
-async function migrateinfo() {
+async function migrateInfo() {
     console.log(chalk.bold('Migration CLI'))
     console.log(
         'Usage: node db/migrate.js <up|down|status|init> [target_migration_id]'
@@ -79,17 +80,12 @@ async function main() {
     const [, , command, arg] = process.argv
 
     try {
-        if (command === 'init') {
-            await migrateInit()
-        } else if (command === 'up') {
-            await migrateUp()
-        } else if (command === 'down') {
-            await migrateDown(arg)
-        } else if (command === 'status') {
-            await migrateStatus()
-        } else {
-            await migrateinfo()
-        }
+        match(command)
+            .with('init', () => migrateInit())
+            .with('up', () => migrateUp())
+            .with('down', () => migrateDown(arg))
+            .with('status', () => migrateStatus())
+            .otherwise(() => migrateInfo())
     } catch (err) {
         console.error(chalk.red('Migration error:'), err)
         process.exit(1)
