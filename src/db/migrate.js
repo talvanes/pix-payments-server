@@ -19,60 +19,76 @@ const pool = new Pool({
 
 const migrator = new Migrator(pool)
 
-async function confirmPrompt(message) {
+async function migrateUp() {
+    console.log(chalk.blue('Running all pending migrations...'))
+    await migrator.runMigrations()
+    console.log(chalk.green('Migrations complete!'))
+}
+
+async function migrateDown(arg) {
+    const msg = arg
+        ? `Are you sure you want to rollback all migrations after ${chalk.yellow(arg)}?`
+        : 'Are you sure you want to rollback the last migration?'
+
     const { confirmed } = await inquirer.prompt([
         {
             type: 'confirm',
             name: 'confirmed',
-            message,
+            message: msg,
             default: false,
         },
     ])
-    return confirmed
+
+    if (confirmed) {
+        await migrator.rollback(arg)
+        console.log(chalk.green('Rollback complete!'))
+    } else {
+        console.log(chalk.gray('Rollback canceled.'))
+    }
+}
+
+async function migrateStatus() {
+    const executed = await migrator.getExecutedMigrations()
+    if (executed.length === 0) {
+        console.log(chalk.yellow('No migrations have been run yet.'))
+    } else {
+        console.log(chalk.cyan('Executed migrations:'))
+        executed.forEach((id) => console.log(chalk.green(`  - ${id}`)))
+    }
+}
+
+async function migrateInit() {
+    console.log(chalk.blue('Initializing the migration schema...'))
+    await migrator.initialize()
+    console.log(chalk.green('Initialized migration schema successfully!'))
+}
+
+async function migrateinfo() {
+    console.log(chalk.bold('Migration CLI'))
+    console.log(
+        'Usage: node db/migrate.js <up|down|status|init> [target_migration_id]'
+    )
+    console.log('  up      - Run all pending migrations')
+    console.log(
+        '  down    - Rollback last migration or to a specific migration'
+    )
+    console.log('  status  - Show executed migrations')
 }
 
 async function main() {
     const [, , command, arg] = process.argv
 
     try {
-        if (command === 'up') {
-            console.log(chalk.blue('Running all pending migrations...'))
-            await migrator.runMigrations()
-            console.log(chalk.green('Migrations complete!'))
+        if (command === 'init') {
+            await migrateInit()
+        } else if (command === 'up') {
+            await migrateUp()
         } else if (command === 'down') {
-            const msg = arg
-                ? `Are you sure you want to rollback all migrations after ${chalk.yellow(arg)}?`
-                : 'Are you sure you want to rollback the last migration?'
-            if (await confirmPrompt(msg)) {
-                await migrator.rollback(arg)
-                console.log(chalk.green('Rollback complete!'))
-            } else {
-                console.log(chalk.gray('Rollback canceled.'))
-            }
+            await migrateDown(arg)
         } else if (command === 'status') {
-            const executed = await migrator.getExecutedMigrations()
-            if (executed.length === 0) {
-                console.log(chalk.yellow('No migrations have been run yet.'))
-            } else {
-                console.log(chalk.cyan('Executed migrations:'))
-                executed.forEach((id) => console.log(chalk.green(`  - ${id}`)))
-            }
-        } else if (command === 'init') {
-            console.log(chalk.blue('Initializing the migration schema...'))
-            await migrator.initialize()
-            console.log(
-                chalk.green('Initialized migration schema successfully!')
-            )
+            await migrateStatus()
         } else {
-            console.log(chalk.bold('Migration CLI'))
-            console.log(
-                'Usage: node db/migrate.js <up|down|status|init> [target_migration_id]'
-            )
-            console.log('  up      - Run all pending migrations')
-            console.log(
-                '  down    - Rollback last migration or to a specific migration'
-            )
-            console.log('  status  - Show executed migrations')
+            await migrateinfo()
         }
     } catch (err) {
         console.error(chalk.red('Migration error:'), err)
