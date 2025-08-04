@@ -1,22 +1,24 @@
 import { migrations } from './migrations/index.js'
 
+function getMigrationTrackingTableCreationSQL() {
+    return /* sql */ `
+    CREATE TABLE IF NOT EXISTS schema_migrations (
+      id VARCHAR(255) PRIMARY KEY,
+      description TEXT,
+      executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`.trim()
+}
+
 export class Migrator {
     constructor(pool) {
         this.pool = pool
     }
 
     async initialize() {
-        const createMigrationTrackingTable = `
-        CREATE TABLE IF NOT EXISTS schema_migrations (
-          id VARCHAR(255) PRIMARY KEY,
-          description TEXT,
-          executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`.trim()
-
         const client = await this.pool.connect()
         try {
             // Create migrations tracking table
-            await client.query(createMigrationTrackingTable)
+            await client.query(getMigrationTrackingTableCreationSQL())
         } finally {
             client.release()
         }

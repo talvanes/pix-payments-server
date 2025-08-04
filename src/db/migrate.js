@@ -81,11 +81,11 @@ async function main() {
 
     try {
         match(command)
-            .with('init', () => migrateInit())
-            .with('up', () => migrateUp())
+            .with('init', migrateInit)
+            .with('up', migrateUp)
             .with('down', () => migrateDown(arg))
-            .with('status', () => migrateStatus())
-            .otherwise(() => migrateInfo())
+            .with('status', migrateStatus)
+            .otherwise(migrateInfo)
     } catch (err) {
         console.error(chalk.red('Migration error:'), err)
         process.exit(1)
