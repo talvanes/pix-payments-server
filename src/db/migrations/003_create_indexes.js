@@ -10,13 +10,14 @@ export const up = async (client) => {
         'CREATE INDEX IF NOT EXISTS idx_pix_charges_expires_at ON pix_charges(expires_at)',
     ]
 
-    const runIndexSqlScripts = indexes.map((indexSql) =>
-        client.query(indexSql).catch((err) => {
+    indexes.forEach(async (indexSql) => {
+        try {
+            await client.query(indexSql)
+        } catch (err) {
             console.error(`Index creation error: ${err.message}`)
-        })
-    )
+        }
+    })
 
-    await Promise.allSettled(runIndexSqlScripts)
     console.log('✓ Created database indexes')
 }
 
@@ -32,13 +33,14 @@ export const down = async (client) => {
         'DROP INDEX IF EXISTS idx_pix_charges_expires_at',
     ]
 
-    const runDropSqlScripts = dropIndexes.map((dropSql) =>
-        client.query(dropSql).catch((err) => {
+    dropIndexes.forEach(async (dropSql) => {
+        try {
+            await client.query(dropSql)
+        } catch (err) {
             console.error(`Index drop error: ${err.message}`)
-        })
-    )
+        }
+    })
 
-    await Promise.allSettled(runDropSqlScripts)
     console.log('✓ Dropped database indexes')
 }
 

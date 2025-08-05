@@ -34,7 +34,7 @@ export class Migrator {
             const result = await client.query(
                 'SELECT id FROM schema_migrations ORDER BY id'
             )
-            return result.rows.map((row) => row.id)
+            return result?.rows.map((row) => row.id)
         } finally {
             client.release()
         }
@@ -52,7 +52,7 @@ export class Migrator {
             await client.query('BEGIN')
 
             for (const migration of migrations) {
-                if (!executed.includes(migration.id)) {
+                if (!executed?.includes(migration.id)) {
                     console.log(
                         `Running migration ${migration.id}: ${migration.description}`
                     )

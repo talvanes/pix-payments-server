@@ -54,7 +54,7 @@ async function migrateStatus() {
         console.log(chalk.yellow('No migrations have been run yet.'))
     } else {
         console.log(chalk.cyan('Executed migrations:'))
-        executed.forEach((id) => console.log(chalk.green(`  - ${id}`)))
+        console.log(chalk.green(`  - ${executed.join('\n  - ')}`))
     }
 }
 
