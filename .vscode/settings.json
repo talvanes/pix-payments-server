@@ -6,6 +6,11 @@
     "source.removeUnusedImports": "explicit"
   },
   "material-icon-theme.folders.associations": {
-    "db/migrations": "tools",
-  }
+    "db/migrations": "tools"
+  },
+  "material-icon-theme.files.associations": {
+    "knexfile.js": "database",
+    "jsconfig.json": "settings",
+    ".env-example": "tune",
+  },
 }
