@@ -10,8 +10,7 @@ This is the server-side component of the PIX Payments system, providing a robust
 
 ```
 ├── db/                    # Database-related files
-│   ├── database.js        # Database connection and query functions
-│   ├── utils.js           # Utility functions
+│   ├── migrations/        # Database migration files
 ├── src/                   # Source code
 │   ├── env.js             # Environment configuration
 │   ├── server.js          # Main application entry point
@@ -95,6 +94,32 @@ To connect using DBGate:
 3. Use the credentials above
 4. For host, use 'pgsql' if connecting through DBGate container
 
+### Database Migrations
+
+The project uses Knex.js for database migrations. The following migrations are available:
+
+- `20250805180541_create_users_table.js` - Creates the users table
+- `20250805180730_create_pix_charges_table.js` - Creates the PIX charges table
+- `20250805180813_create_pix_charges_indexes.js` - Creates indexes for PIX charges
+
+To set up the database:
+
+1. Ensure your database connection is configured in `knexfile.js`
+2. Run migrations:
+   ```bash
+   npm run migrate
+   ```
+
+If you need to roll back migrations:
+```bash
+npm run migrate:rollback
+```
+
+To create a new migration:
+```bash
+npm run migrate:make migration_name
+```
+
 ### Available Scripts
 
 - `npm run dev` - Start development server with nodemon
@@ -105,6 +130,13 @@ To connect using DBGate:
 - `npm run test` - Run tests
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:coverage` - Run tests with coverage
+
+#### Database Migration Scripts
+
+- `npm run migrate` - Run all pending database migrations
+- `npm run migrate:rollback` - Rollback the last batch of migrations
+- `npm run migrate:make <name>` - Create a new migration file
+- `npm run migrate:status` - Show the status of all migrations
 
 ### Docker Commands
 
