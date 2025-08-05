@@ -1,6 +1,6 @@
 // Update with your config settings.
 
-const { env } = require('@/env')
+const { env } = require('./src/env')
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -19,6 +19,8 @@ module.exports = {
         max: 10,
     },
     migrations: {
-        tableName: 'knex_migrations',
+        tableName: 'schema_migrations',
+        directory: './db/migrations',
+        createSchema: true,
     },
 }
