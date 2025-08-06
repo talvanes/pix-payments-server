@@ -1,8 +1,8 @@
 import fastifyCookie from '@fastify/cookie'
 import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
-import { env } from '@root/env'
 import fastify from 'fastify'
+import { env } from './env.js'
 
 // Function to start the server
 async function startServer() {

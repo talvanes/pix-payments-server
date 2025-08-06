@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "PIX payment system with user authentication and real-time dashboard monitoring. The server part.",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon",
     "build": "babel src -d dist",

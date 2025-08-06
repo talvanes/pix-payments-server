@@ -1,11 +1,11 @@
 // Update with your config settings.
 
-const { env } = require('./src/env')
+import { env } from './src/env'
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-module.exports = {
+export default {
     client: 'pg',
     connection: {
         host: env['DB_HOST'],
