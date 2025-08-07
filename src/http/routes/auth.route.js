@@ -1,12 +1,14 @@
 // auth.route.js
 
 import AuthController from '../controllers/AuthController.js'
-
-const registerSchema = {}
-const registerResponseSchema = {}
-
-const loginSchema = {}
-const loginResponseSchema = {}
+import authenticatePlugin from '../plugins/authenticate.plugin.js'
+import {
+    tokenVerificationSchema,
+    userLoginSchema,
+    userLogoutSchema,
+    userProfileSchema,
+    userRegistrationSchema,
+} from '../schemas/auth.schema.js'
 
 /**
  * Authentication routes
@@ -15,45 +17,36 @@ const loginResponseSchema = {}
  */
 async function authRoutes(server, options) {
     const authController = new AuthController()
+    const authenticate = await authenticatePlugin(server)
 
     // User registration endpoint
     server.post(
         '/register',
-        {
-            schema: {
-                body: registerSchema,
-                response: { 201: registerResponseSchema },
-            },
-        },
+        { schema: userRegistrationSchema },
         authController.registerUser
     )
 
     // User login endpoint
-    server.post(
-        '/login',
-        {
-            schema: {
-                body: loginSchema,
-                response: { 200: loginResponseSchema },
-            },
-        },
-        authController.loginUser
-    )
+    server.post('/login', { schema: userLoginSchema }, authController.loginUser)
 
     // User logout endpoint
-    server.post('/logout', authController.logoutUser)
+    server.post(
+        '/logout',
+        { schema: userLogoutSchema },
+        authController.logoutUser
+    )
 
     // Profile endpoint (protected)
     server.get(
         '/profile',
-        { preHandler: [server.authenticate] },
+        { preHandler: [authenticate], schema: userProfileSchema },
         authController.getUserProfile
     )
 
     // Token verification endpoint (protected)
     server.get(
         '/verify',
-        { preHandler: [server.authenticate] },
+        { preHandler: [authenticate], schema: tokenVerificationSchema },
         authController.verifyUserJwtToken
     )
 }

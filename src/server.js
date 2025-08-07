@@ -39,7 +39,6 @@ async function buildServer() {
     })
 
     // Database connection plugin
-    // JWT verification plugin
 
     // Health check route
     server.get('/', () => {
