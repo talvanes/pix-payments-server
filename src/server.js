@@ -1,11 +1,11 @@
+import { env } from '@/env.js'
+import authRoutes from '@/http/routes/auth.route.js'
+import dashboardRoutes from '@/http/routes/dashboard.route.js'
+import pixRoutes from '@/http/routes/pix.route.js'
 import fastifyCookie from '@fastify/cookie'
 import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
-import { env } from './env.js'
-import authRoutes from './http/routes/auth.route.js'
-import dashboardRoutes from './http/routes/dashboard.route.js'
-import pixRoutes from './http/routes/pix.route.js'
 
 // Function to start the server
 async function startServer() {

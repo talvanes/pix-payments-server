@@ -1,14 +1,14 @@
 // auth.route.js
 
-import AuthController from '../controllers/AuthController.js'
-import authenticatePlugin from '../plugins/authenticate.plugin.js'
+import AuthController from '@/http/controllers/AuthController.js'
+import authenticatePlugin from '@/http/plugins/authenticate.plugin.js'
 import {
     tokenVerificationSchema,
     userLoginSchema,
     userLogoutSchema,
     userProfileSchema,
     userRegistrationSchema,
-} from '../schemas/auth.schema.js'
+} from '@/http/schemas/auth.schema.js'
 
 /**
  * Authentication routes
