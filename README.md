@@ -147,6 +147,40 @@ npm run migrate:make migration_name
 - `docker-compose logs` - View service logs
 - `docker-compose ps` - List running services
 
+## API Documentation
+
+### Core Plugins
+
+The application uses several Fastify plugins for core functionality:
+
+- **CORS Plugin**: Enables Cross-Origin Resource Sharing with specific origin configuration
+- **Cookie Plugin**: Handles cookie parsing and management
+- **JWT Plugin**: Manages JSON Web Token authentication
+
+### Authentication Plugin
+
+A custom authentication plugin that:
+- Validates JWT tokens from either:
+  - Authorization header (Bearer token)
+  - Cookie ('auth_token')
+- Attaches user information to the request object
+- Returns 401 Unauthorized if token is invalid or missing
+
+### API Routes
+
+The API is organized into three main areas:
+
+1. **Authentication** (`/auth`)
+   - Handles user authentication and authorization
+
+2. **PIX** (`/pix`)
+   - Manages PIX payment operations
+   - Handles charge creation and processing
+
+3. **Dashboard** (`/dashboard`)
+   - Provides real-time monitoring endpoints
+   - Serves analytics and transaction data
+
 ## Network Configuration
 
 The application uses a dedicated Docker network 'pix-payments-network' for secure communication between services. All services are isolated within this network, with only necessary ports exposed to the host system.
