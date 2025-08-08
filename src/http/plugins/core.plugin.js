@@ -6,7 +6,7 @@ import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 
 /**
- * @type {Map<import('fastify').FastifyPluginCallback, import('fastify').FastifyRegisterOptions>}
+ * @type {Map<import('fastify').FastifyPluginCallback, import('fastify').FastifyPluginOptions>}
  */
 const corePlugins = new Map([
     // CORS settings

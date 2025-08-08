@@ -1,0 +1,129 @@
+@hostname = http://127.0.0.1
+@port = {{$dotenv PORT}}
+@baseURL = {{hostname}}:{{port}}
+@jwtSecret = {{$dotenv JWT_SECRET}}
+
+###
+
+# Health ckeck
+GET {{baseURL}} HTTP/1.1
+
+###
+
+# Auth: User registration
+POST {{baseURL}}/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "talvanes@example.net",
+    "password": "ht34-%fasd7-A1gh0x",
+    "name": "Talvanes"
+
+}
+
+###
+
+# Auth: User login
+POST {{baseURL}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "talvanes@example.net",
+    "password": "ht34-%fasd7-A1gh0x"
+}
+
+###
+
+# Auth: User logout
+POST {{baseURL}}/auth/logout HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+
+# Auth: User Profile (protected)
+
+GET {{baseURL}}/auth/profile HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+###
+
+# Auth: Token verification (protected)
+
+GET {{baseURL}}/auth/verify HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+###
+
+# Pix: Pix charge generation (protected)
+
+POST {{baseURL}}/pix/generate HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+{
+    "amount": 2.50,
+    "description": "Caixa da Maria"
+}
+
+###
+
+# Pix: Payment confirmation (protected)
+@token = 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
+
+PATCH {{baseURL}}/pix/{{token}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+{}
+
+###
+
+# PIX: Pix charge details (protected)
+
+GET {{baseURL}}/pix/{{token}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+###
+
+# PIX: Pix charge querying (protected)
+
+GET {{baseURL}}/pix/charges/list HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+###
+
+# Dashboard: Complete dashboard querying (protected)
+
+GET {{baseURL}}/dashboard HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+###
+
+# Dashboard: Overall statistics (protected)
+
+GET {{baseURL}}/dashboard/stats HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+###
+
+# Dashboard: Recent pix charges (protected)
+
+GET {{baseURL}}/dashboard/recent HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
+
+###
+
+# Dashboard: Pix charges by status (protected)
+
+GET {{baseURL}}/dashboard/charges/paid HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwtSecret}}
