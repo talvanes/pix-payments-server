@@ -1,10 +1,6 @@
 import { env } from '@/env.js'
-import authRoutes from '@/http/routes/auth.route.js'
-import dashboardRoutes from '@/http/routes/dashboard.route.js'
-import pixRoutes from '@/http/routes/pix.route.js'
-import fastifyCookie from '@fastify/cookie'
-import fastifyCors from '@fastify/cors'
-import fastifyJwt from '@fastify/jwt'
+import corePlugins from '@/http/plugins/core.plugin.js'
+import routes from '@/http/routes'
 import fastify from 'fastify'
 
 // Function to start the server
@@ -26,29 +22,18 @@ async function buildServer() {
     // Create a Fastify server instance
     const server = fastify({ logger: env.isDevelopment })
 
-    // CORS configuration
-    server.register(fastifyCors, {
-        origin: 'http://127.0.0.1:5173',
-        credentials: true,
+    // Loading core server plugins
+    corePlugins.forEach((options, serverPlugin) => {
+        server.register(serverPlugin, options)
     })
-    // Cookie parser
-    server.register(fastifyCookie)
-    // JWT authentication
-    server.register(fastifyJwt, {
-        secret: env['JWT_SECRET'],
-    })
-
-    // Database connection plugin
 
     // Health check route
-    server.get('/', () => {
-        return 'ok'
-    })
+    server.get('/', () => 'ok')
 
-    // Application routes
-    server.register(authRoutes, { prefix: '/auth' })
-    server.register(dashboardRoutes, { prefix: '/dashboard' })
-    server.register(pixRoutes, { prefix: '/pix' })
+    // Loading application routes
+    routes.forEach((options, routeGroup) => {
+        server.register(routeGroup, options)
+    })
 
     return server
 }
