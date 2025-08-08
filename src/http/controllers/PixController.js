@@ -28,7 +28,7 @@ export default class PixController {
      * @param {import("fastify/types/reply").FastifyReply} reply Reply object
      */
     async getUserPixCharges(request, reply) {}
-
-    // Method to start a scheduler for expiring PIX charges
-    startExpirationScheduler() {}
 }
+
+// Method to start a scheduler for expiring PIX charges
+function startExpirationScheduler(pixChargesService) {}
