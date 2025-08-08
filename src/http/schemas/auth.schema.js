@@ -18,10 +18,10 @@ export const userRegistrationSchema = {
         201: {
             type: 'object',
             properties: {
-                success: { type: 'boolean' },
+                success: { const: true },
                 message: { type: 'string' },
                 userId: { type: 'integer' },
-                token: { type: 'string' },
+                token: { type: 'string', format: 'uuid' },
             },
         },
     },
@@ -44,10 +44,10 @@ export const userLoginSchema = {
         200: {
             type: 'object',
             properties: {
-                success: { type: 'boolean' },
+                success: { const: true },
                 message: { type: 'string' },
                 userId: { type: 'integer' },
-                token: { type: 'string' },
+                token: { type: 'string', format: 'uuid' },
             },
         },
     },
@@ -62,7 +62,7 @@ export const userLogoutSchema = {
         200: {
             type: 'object',
             properties: {
-                success: { type: 'boolean' },
+                success: { const: true },
                 message: { type: 'string' },
             },
         },
@@ -78,12 +78,12 @@ export const userProfileSchema = {
         200: {
             type: 'object',
             properties: {
-                success: { type: 'boolean' },
+                success: { const: true },
                 user: {
                     type: 'object',
                     properties: {
                         id: { type: 'integer' },
-                        email: { type: 'string' },
+                        email: { type: 'string', format: 'email' },
                         name: { type: 'string' },
                         createdAt: { type: 'string' },
                     },
@@ -102,7 +102,7 @@ export const tokenVerificationSchema = {
         200: {
             type: 'object',
             properties: {
-                success: { type: 'boolean' },
+                success: { const: true },
                 user: { type: 'object' },
             },
         },
