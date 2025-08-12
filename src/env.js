@@ -7,7 +7,7 @@ config()
 // Valdiate environment variables
 export const env = cleanEnv(process.env, {
     NODE_ENV: str({ choices: ['development', 'production', 'test'] }),
-    PORT: port(),
+    PORT: port({ default: 3333 }),
     JWT_SECRET: str(),
     DB_HOST: str({ default: '127.0.0.1' }),
     DB_PORT: port({ default: 5432 }),
