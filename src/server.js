@@ -20,7 +20,17 @@ async function startServer() {
 // Function to build the server
 async function buildServer() {
     // Create a Fastify server instance
-    const server = fastify({ logger: env.isDevelopment })
+    const server = fastify({
+        logger: {
+            transport: {
+                target: 'pino-pretty',
+                options: {
+                    translateTime: 'HH:MM:ss Z',
+                    ignore: 'pid,hostname',
+                },
+            },
+        },
+    })
 
     // Loading core server plugins
     corePlugins.forEach((options, serverPlugin) => {

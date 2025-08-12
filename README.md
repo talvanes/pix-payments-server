@@ -77,7 +77,7 @@ The application is containerized using Docker and includes:
    - Database GUI (DBGate): http://localhost:3000
    - PostgreSQL: localhost:5432
    - Node.js server
-     Available under the command `npm run dev`: http://localhost:3100
+     Available under the command `npm run dev`: http://localhost:3333
 
 ### Database Configuration
 
