@@ -1,7 +1,6 @@
 services:
   pgsql:
     image: postgres:latest
-    restart: always
     container_name: pix-payments-postgres
     environment:
       POSTGRES_USER: pix_user
@@ -15,7 +14,6 @@ services:
       - pix-payments-network
   dbgate:
     image: dbgate/dbgate
-    restart: always
     container_name: pix-payments-dbgate
     ports:
       - "3000:3000"

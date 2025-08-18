@@ -1,13 +1,13 @@
 // dashboard.route.js
 
-import DashboardController from '@/http/controllers/DashboardController.js'
-import authenticatePlugin from '@/http/plugins/authenticate.plugin.js'
+import DashboardController from '../controllers/DashboardController.js'
+import authenticatePlugin from '../hooks/authenticate.plugin.js'
 import {
     chargesByStatusQueryingSchema,
     completeDashboardDataQueryingSchema,
     dashboardStatisticsQueryingSchema,
     recentChargeQueryingSchema,
-} from '../schemas/dashboard.schema'
+} from '../schemas/dashboard.schema.js'
 
 /**
  * Dashboard routes

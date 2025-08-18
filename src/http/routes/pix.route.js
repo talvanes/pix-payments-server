@@ -1,13 +1,13 @@
 // pix.route.js
 
-import PixController from '@/http/controllers/PixController.js'
-import authenticatePlugin from '@/http/plugins/authenticate.plugin.js'
+import PixController from '../controllers/PixController.js'
+import authenticatePlugin from '../hooks/authenticate.plugin.js'
 import {
     pixChargeGenerationSchema,
     pixChargesDetailsSchema,
     pixPaymentConfirmationSchema,
     userPixChargeQueryingSchema,
-} from '@/http/schemas/pix.schema.js'
+} from '../schemas/pix.schema.js'
 
 /**
  * PIX charge routes

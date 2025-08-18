@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "PIX payment system with user authentication and real-time dashboard monitoring. The server part.",
   "main": "src/server.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "node --watch src/server.js",
     "build": "babel src -d dist",
     "start": "npm run build && node dist/server.js",
     "lint": "eslint .",
@@ -24,7 +24,6 @@
   "devDependencies": {
     "@babel/cli": "^7.28.0",
     "@babel/core": "^7.28.0",
-    "@babel/node": "^7.28.0",
     "@babel/preset-env": "^7.28.0",
     "@eslint/js": "^9.31.0",
     "@jest/globals": "^30.0.5",
@@ -34,7 +33,6 @@
     "eslint-plugin-prettier": "^5.5.3",
     "globals": "^16.3.0",
     "jest": "^30.0.5",
-    "nodemon": "^3.1.10",
     "prettier": "3.6.2"
   },
   "dependencies": {

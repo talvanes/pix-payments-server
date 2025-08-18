@@ -5,7 +5,7 @@
  * @param {import("fastify/types/instance").FastifyInstance} server  Encapsulated Fastify Instance
  * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
-async function authenticatePlugin(server, options) {
+async function checkRequestJWT(server, options) {
     /**
      * Authentication plugin
      * @param {import("fastify/types/request").FastifyRequest} request Request object
@@ -22,7 +22,7 @@ async function authenticatePlugin(server, options) {
                 throw new Error('No token provided')
             }
 
-            const decoded = server.jwt.verify(token)
+            const decoded = server.jwt.verify(token, { maxAge: '1h' })
             request.user = decoded
         } catch (err) {
             reply.code(401).send({ error: 'Unauthorized' })
@@ -30,4 +30,4 @@ async function authenticatePlugin(server, options) {
     }
 }
 
-export default authenticatePlugin
+export default checkRequestJWT
