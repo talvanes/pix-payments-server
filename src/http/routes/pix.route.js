@@ -1,7 +1,7 @@
 // pix.route.js
 
 import PixController from '../controllers/PixController.js'
-import authenticatePlugin from '../hooks/authenticate.plugin.js'
+import checkRequestJWT from '../hooks/check-jwt-request.js'
 import {
     pixChargeGenerationSchema,
     pixChargesDetailsSchema,
@@ -12,17 +12,15 @@ import {
 /**
  * PIX charge routes
  * @param {import("fastify/types/instance").FastifyInstance} server  Encapsulated Fastify Instance
- * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
-async function pixRoutes(server, options) {
+async function pixRoutes(server) {
     const pixController = new PixController()
-    const authenticate = await authenticatePlugin(server)
 
     // PIX charge generation endpoint (protected)
     server.post(
         '/generate',
         {
-            preHandler: [authenticate],
+            preHandler: [checkRequestJWT],
             schema: pixChargeGenerationSchema,
         },
         pixController.generatePixCharge
@@ -41,7 +39,7 @@ async function pixRoutes(server, options) {
     server.get(
         '/:token',
         {
-            preHandler: [authenticate],
+            preHandler: [checkRequestJWT],
             schema: pixChargesDetailsSchema,
         },
         pixController.getPixCharge
@@ -51,7 +49,7 @@ async function pixRoutes(server, options) {
     server.get(
         '/charges/list',
         {
-            preHandler: [authenticate],
+            preHandler: [checkRequestJWT],
             schema: userPixChargeQueryingSchema,
         },
         pixController.getUserPixCharges

@@ -1,7 +1,7 @@
 // dashboard.route.js
 
 import DashboardController from '../controllers/DashboardController.js'
-import authenticatePlugin from '../hooks/authenticate.plugin.js'
+import checkRequestJWT from '../hooks/check-jwt-request.js'
 import {
     chargesByStatusQueryingSchema,
     completeDashboardDataQueryingSchema,
@@ -12,17 +12,15 @@ import {
 /**
  * Dashboard routes
  * @param {import("fastify/types/instance").FastifyInstance} server  Encapsulated Fastify Instance
- * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
-async function dashboardRoutes(server, options) {
+async function dashboardRoutes(server) {
     const dashboardController = new DashboardController()
-    const authenticate = await authenticatePlugin(server)
 
     //  Dashboard statistics endpoint (protected)
     server.get(
         '/stats',
         {
-            preHandler: [authenticate],
+            preHandler: [checkRequestJWT],
             schema: dashboardStatisticsQueryingSchema,
         },
         dashboardController.getDashboardStats
@@ -32,7 +30,7 @@ async function dashboardRoutes(server, options) {
     server.get(
         '/recent',
         {
-            preHandler: [authenticate],
+            preHandler: [checkRequestJWT],
             schema: recentChargeQueryingSchema,
         },
         dashboardController.getRecentPixCharges
@@ -42,7 +40,7 @@ async function dashboardRoutes(server, options) {
     server.get(
         '/',
         {
-            preHandler: [authenticate],
+            preHandler: [checkRequestJWT],
             schema: completeDashboardDataQueryingSchema,
         },
         dashboardController.getDashboardData
@@ -52,7 +50,7 @@ async function dashboardRoutes(server, options) {
     server.get(
         '/charges/:status',
         {
-            preHandler: [authenticate],
+            preHandler: [checkRequestJWT],
             schema: chargesByStatusQueryingSchema,
         },
         dashboardController.getChargesByStatus

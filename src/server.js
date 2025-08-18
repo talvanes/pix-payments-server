@@ -7,20 +7,6 @@ import authRoutes from './http/routes/auth.route.js'
 import dashboardRoutes from './http/routes/dashboard.route.js'
 import pixRoutes from './http/routes/pix.route.js'
 
-// Function to start the server
-async function startServer() {
-    const server = await buildServer()
-    const port = env['PORT']
-
-    try {
-        await server.listen({ port })
-        console.log(`PIX Payment Server is running on http://localhost:${port}`)
-    } catch (error) {
-        console.error('Error starting server:', error)
-        process.exit(1)
-    }
-}
-
 // Function to build the server
 async function buildServer() {
     // Create a Fastify server instance
@@ -58,8 +44,5 @@ async function buildServer() {
 
     return server
 }
-
-// Start the application server
-startServer()
 
 export { buildServer }

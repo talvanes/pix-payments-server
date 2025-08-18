@@ -1,7 +1,7 @@
 // auth.route.js
 
 import AuthController from '../controllers/AuthController.js'
-import authenticatePlugin from '../hooks/authenticate.plugin.js'
+import checkRequestJWT from '../hooks/check-jwt-request.js'
 import {
     tokenVerificationSchema,
     userLoginSchema,
@@ -13,11 +13,9 @@ import {
 /**
  * Authentication routes
  * @param {import("fastify/types/instance").FastifyInstance} server  Encapsulated Fastify Instance
- * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
-async function authRoutes(server, options) {
+async function authRoutes(server) {
     const authController = new AuthController()
-    const authenticate = await authenticatePlugin(server)
 
     // User registration endpoint
     server.post(
@@ -39,14 +37,14 @@ async function authRoutes(server, options) {
     // Profile endpoint (protected)
     server.get(
         '/profile',
-        { preHandler: [authenticate], schema: userProfileSchema },
+        { preHandler: [checkRequestJWT], schema: userProfileSchema },
         authController.getUserProfile
     )
 
     // Token verification endpoint (protected)
     server.get(
         '/verify',
-        { preHandler: [authenticate], schema: tokenVerificationSchema },
+        { preHandler: [checkRequestJWT], schema: tokenVerificationSchema },
         authController.verifyUserJwtToken
     )
 }
