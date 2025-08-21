@@ -1,17 +1,18 @@
 export default {
     testEnvironment: 'node',
-    globals: {
-        'ts-jest': {
-            useESM: true,
-        },
+    transform: {
+        '^.+\\.jsx?$': 'babel-jest',
     },
+    extensionsToTreatAsEsm: ['.js'],
     moduleNameMapper: {
         '^(\\.{1,2}/.*)\\.js$': '$1',
+        '@/(.*)': '<rootDir>/src/$1',
     },
     testMatch: ['**/*.test.js', '**/*.spec.js'],
     collectCoverageFrom: [
-        'db/**/*.js',
-        '!db/migrations/**/*.js', // Exclude individual migration files from coverage
+        'src/**/*.js',
+        '!dist/**/*.js',
+        '!database/migrations/**/*.js', // Exclude individual migration files from coverage
         '!**/node_modules/**',
     ],
     coverageThreshold: {
