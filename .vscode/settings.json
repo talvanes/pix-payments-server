@@ -6,7 +6,7 @@
     "source.removeUnusedImports": "explicit"
   },
   "material-icon-theme.folders.associations": {
-    "db/migrations": "tools",
+    "database/migrations": "tools",
     "http/schemas": "json"
   },
   "material-icon-theme.files.associations": {

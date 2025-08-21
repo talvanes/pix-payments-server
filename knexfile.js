@@ -1,6 +1,6 @@
 // Update with your config settings.
 
-import { env } from './src/env'
+import { env } from './src/env.js'
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -20,7 +20,7 @@ export default {
     },
     migrations: {
         tableName: 'schema_migrations',
-        directory: './db/migrations',
+        directory: './database/migrations',
         createSchema: true,
     },
 }
