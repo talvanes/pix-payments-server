@@ -3,9 +3,6 @@ import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
 import { env } from './env.js'
-import authRoutes from './http/routes/auth.route.js'
-import dashboardRoutes from './http/routes/dashboard.route.js'
-import pixRoutes from './http/routes/pix.route.js'
 
 // Function to build the server
 async function buildServer() {
@@ -38,9 +35,6 @@ async function buildServer() {
     server.get('/', () => 'ok')
 
     // Loading application routes
-    server.register(authRoutes, { prefix: '/auth' })
-    server.register(pixRoutes, { prefix: '/pix' })
-    server.register(dashboardRoutes, { prefix: '/dashboard' })
 
     return server
 }

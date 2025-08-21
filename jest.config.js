@@ -8,8 +8,7 @@ export default {
     moduleNameMapper: {
         '^(\\.{1,2}/.*)\\.js$': '$1',
     },
-    setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
-    testMatch: ['**/tests/**/*.test.js'],
+    testMatch: ['**/*.test.js', '**/*.spec.js'],
     collectCoverageFrom: [
         'db/**/*.js',
         '!db/migrations/**/*.js', // Exclude individual migration files from coverage
