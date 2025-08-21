@@ -10,11 +10,6 @@ GET {{baseURL}} HTTP/1.1
 
 ###
 
-# Server options
-OPTIONS {{baseURL}} HTTP/1.1
-
-###
-
 # Auth: User registration
 POST {{baseURL}}/auth/register HTTP/1.1
 Content-Type: application/json

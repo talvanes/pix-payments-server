@@ -10,7 +10,7 @@ describe('Core Plugins', () => {
 
     it('should have CORS enabled', async () => {
         const response = await server.inject({
-            method: 'OPTIONS',
+            method: 'GET',
             url: '/',
             headers: {
                 Origin: 'http://127.0.0.1:5173',
