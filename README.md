@@ -9,16 +9,26 @@ This is the server-side component of the PIX Payments system, providing a robust
 ## Project Structure
 
 ```
-├── db/                    # Database-related files
-│   ├── migrations/        # Database migration files
-├── src/                   # Source code
-│   ├── env.js             # Environment configuration
-│   ├── server.js          # Main application entry point
-│   └── http/              # HTTP-related modules
-│       ├── plugins/       # Server plugins
-│       └── routes/        # API routes
-├── tests/                 # Test files
-│   └── setup.js           # Test setup and configuration
+├── database/               # Database-related files
+│   ├── migrations/         # Database migration files
+├── src/                    # Source code
+│   ├── app.js              # Application bootstrap
+│   ├── env.js              # Environment configuration
+│   ├── server.js           # Server instance setup
+│   └── http/               # HTTP-related modules
+│       ├── hooks/          # Request/Response hooks
+│       │   └── authenticate-jwt-request.js
+│       └── routes/         # API routes
+│           ├── auth/       # Authentication endpoints
+│           ├── dashboard/  # Monitoring endpoints
+│           └── pix/        # Payment endpoints
+├── tests/                  # Test files
+│   ├── setup.js            # Test environment setup
+│   ├── plugins/            # Plugin tests
+│   │   ├── authenticate-jwt-request.test.js
+│   │   └── core-plugins.test.js
+│   └── routes/             # Route tests
+│       └── auth-routes.test.js
 ├── docker-compose.yml     # Docker services configuration
 ├── .env.example           # Environment variables template
 ├── eslint.config.mjs      # ESLint configuration
@@ -129,9 +139,39 @@ npm run migrate:make migration_name
 - `npm run lint:fix` - Fix linting issues
 - `npm run test` - Run tests
 - `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Run tests with coverage
+- `npm run coverage` - Run tests with coverage
 
-#### Database Migration Scripts
+### Testing
+
+The project uses Jest for testing with the following structure:
+
+#### Test Organization
+- `tests/setup.js`: Global test setup and configuration
+- `tests/plugins/`: Tests for Fastify plugins and hooks
+- `tests/routes/`: API endpoint integration tests
+
+#### Running Tests
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run coverage
+```
+
+#### Coverage Requirements
+All code must maintain:
+- 80% branch coverage
+- 80% function coverage
+- 80% line coverage
+- 80% statement coverage
+
+Coverage reports are generated in the `coverage/` directory.
+
+### Database Migration Scripts
 
 - `npm run migrate` - Run all pending database migrations
 - `npm run migrate:rollback` - Rollback the last batch of migrations
