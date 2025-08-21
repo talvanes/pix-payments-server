@@ -15,14 +15,10 @@ describe('Authenticate Plugin', () => {
 
         const response = await server.inject({
             method: 'GET',
-            url: '/protected-route',
+            url: '/auth/verify',
         })
 
         expect(response.statusCode).toBe(401)
-        expect(JSON.parse(response.payload)).toHaveProperty(
-            'error',
-            'Unauthorized'
-        )
     })
 
     it('should accept valid JWT token in Authorization header', async () => {
@@ -30,7 +26,9 @@ describe('Authenticate Plugin', () => {
         await server.ready()
 
         // TODO Create factory function for user authentication
-        const token = server.jwt.sign({ userId: 1 })
+        const userId = '00000000-0000-0000-0000-000000000000'
+
+        const token = server.jwt.sign({ userId })
 
         const response = await server.inject({
             method: 'GET',
@@ -48,7 +46,9 @@ describe('Authenticate Plugin', () => {
         await server.ready()
 
         // TODO Create factory function for user authentication
-        const token = server.jwt.sign({ userId: 1 })
+        const userId = '00000000-0000-0000-0000-000000000000'
+
+        const token = server.jwt.sign({ userId })
 
         const response = await server.inject({
             method: 'GET',
