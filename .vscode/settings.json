@@ -7,14 +7,13 @@
   },
   "material-icon-theme.folders.associations": {
     "database/migrations": "tools",
-    "factories": "custom"
+    "factories": "custom",
+    "pix": "keys",
+    "dashboard": "layout",
   },
   "material-icon-theme.files.associations": {
     "knexfile.js": "database",
     "jsconfig.json": "settings",
-    ".env-example": "tune",
-    "*.plugin.js": "key",
-    "*.schema.js": "json",
-    "routes/index.js": "http"
+    ".env-example": "tune"
   },
 }
