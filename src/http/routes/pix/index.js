@@ -1,9 +1,8 @@
 /**
  * Pix routes for handling payment-related operations
  * @param {import("fastify/types/instance").FastifyInstance} server Fastify instance
- * @param {object} options Server options
  */
-export default async function pixRoutes(server, options) {
+export default async function pixRoutes(server) {
     // Genearte PIX charge (protected)
     // Confirm payment (public endpoint for payment confirmation)
     // Get PIX charge details (protected)
