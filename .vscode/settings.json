@@ -14,6 +14,7 @@
   "material-icon-theme.files.associations": {
     "knexfile.js": "database",
     "jsconfig.json": "settings",
-    ".env-example": "tune"
+    ".env-example": "tune",
+    "index.js": "tree"
   },
 }
