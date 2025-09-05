@@ -7,7 +7,9 @@ import { env } from '../../env'
  * @param {import("fastify").FastifyReply} reply The reply object
  */
 export default async function authenticateJwtRequest(request, reply) {
-    const token = request.headers['authorization']?.replace('Bearer ', '')
+    const token =
+        request.headers['authorization']?.replace('Bearer ', '') ||
+        request.cookies['auth_token']
 
     if (!token) {
         return reply.status(401).send()
